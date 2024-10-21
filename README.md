@@ -1,7 +1,0 @@
-# 42
-All my 42 projects
-## 42
-### 42
-#### 42
-##### 42
-###### All my 42 projects
