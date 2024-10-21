@@ -6,39 +6,34 @@
 /*   By: oudina <oudina@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:12:12 by oudina            #+#    #+#             */
-/*   Updated: 2024/09/23 21:19:18 by oudina           ###   ########.fr       */
+/*   Updated: 2024/10/18 21:01:48 by oudina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isspace(char c)
+int	ft_atoi(const char *str)
 {
-	return (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f'
-		|| c == '\r');
-}
+	int					c;
+	int					signo;
+	int					result;
 
-int	ft_atoi(const char *nptr)
-{
-	long	res;
-	int		i;
-	int		isneg;
-
-	i = 0;
-	res = 1;
-	isneg = 1;
-	if (!nptr)
-		return (0);
-	while (nptr[i] && ft_isspace(nptr[i]))
-		i++;
-	if (nptr[i] == '-')
-		isneg = -1;
-	if (nptr[i] == '+' || nptr[i] == '-')
-		i++;
-	while (nptr[i] && nptr[i] <= '9' && nptr[i] >= '0')
+	c = 0;
+	result = 0;
+	signo = 1;
+	while (str[c] == ' ' || str[c] == '\n' || str[c] == '\r'
+		|| str[c] == '\t' || str[c] == '\v' || str[c] == '\f')
+		c++;
+	if (str[c] == '-' || str[c] == '+')
 	{
-		res = (res * 10) + (nptr[i] - '0');
-		i++;
+		if (str[c] == '-')
+			signo = -1;
+		c++;
 	}
-	return ((int)(res * isneg));
+	while (str[c] >= '0' && str[c] <= '9')
+	{
+		result = result * 10 + (str[c] - '0');
+		c++;
+	}
+	return (signo * result);
 }

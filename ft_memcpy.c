@@ -6,7 +6,7 @@
 /*   By: oudina <oudina@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 20:49:19 by oudina            #+#    #+#             */
-/*   Updated: 2024/09/23 19:54:52 by oudina           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:22:28 by oudina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t	i;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
 
-	if (!dest)
-	{
-		return (NULL);
-	}
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
 	i = 0;
+	if (!dest && !src)
+		return (NULL);
 	while (i < n)
 	{
-		*((char *)dest + i) = *((char *)src + i);
+		d[i] = s[i];
 		i++;
 	}
 	return (dest);

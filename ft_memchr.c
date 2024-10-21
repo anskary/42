@@ -6,7 +6,7 @@
 /*   By: oudina <oudina@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 00:41:20 by oudina            #+#    #+#             */
-/*   Updated: 2024/09/24 05:35:03 by oudina           ###   ########.fr       */
+/*   Updated: 2024/10/20 17:15:42 by oudina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	i;
+	unsigned char	*s_aux;
+	unsigned char	c_aux;
+	size_t			i;
 
-	if (!s)
-		return (NULL);
+	c_aux = (unsigned char)c;
+	s_aux = (unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{
-		if (*(unsigned char *)s + i == (unsigned char)c)
-			return ((unsigned char *)s + i);
+		if (s_aux[i] == c_aux)
+			return ((void *)&s_aux[i]);
 		i++;
 	}
 	return (NULL);

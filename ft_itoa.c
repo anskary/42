@@ -1,32 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oudina <oudina@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 03:36:05 by oudina            #+#    #+#             */
-/*   Updated: 2024/10/20 17:29:10 by oudina           ###   ########.fr       */
+/*   Created: 2024/10/20 17:18:39 by oudina            #+#    #+#             */
+/*   Updated: 2024/10/21 01:21:35 by oudina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+static int	countdigits(int i)
 {
-	int		len1;
-	int		len2;
-	char	*res;
+	int	cont;
 
-	if (s1 == NULL || s2 == NULL)
+	cont = 0;
+	if (i <= 0)
+	{
+		cont = 1;
+	}
+	while (i != 0)
+	{
+		i /= 10;
+		cont++;
+	}
+	return (cont);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*res;
+	int		len;
+	long	n_aux;
+
+	n_aux = n;
+	len = countdigits(n);
+	res = (char *)(malloc(sizeof(char) * len + 1));
+	if (!res)
 		return (NULL);
-	len1 = (int)ft_strlen(s1);
-	len2 = (int)ft_strlen(s2);
-	res = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	if (res == NULL)
-		return (NULL);
-	ft_memcpy(res, s1, len1);
-	ft_memcpy(res + len1, s2, len2);
-	res[len1 + len2] = '\0';
+	res[len] = '\0';
+	if (n_aux < 0)
+	{
+		res[0] = '-';
+		n_aux = -n_aux;
+	}
+	else if (n_aux == 0)
+		res[0] = '0';
+	while (n_aux > 0)
+	{
+		res[--len] = (n_aux % 10) + '0';
+		n_aux /= 10;
+	}
 	return (res);
 }

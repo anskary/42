@@ -1,52 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oudina <oudina@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 13:48:33 by oudina            #+#    #+#             */
+/*   Updated: 2024/10/20 22:25:47 by oudina           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 
+static int	ft_split_cnt(char const *s, char c);
+static char	**ft_split_in(char const *s, char c, char **res);
+static void	ft_split_free(char **dst, int d);
 
 char	**ft_split(char const *s, char c)
 {
-	char **res;
-	char *aux;
-	int wrdcnt;
-	int i;
+	char	**res;
 
-    printf("1");
-
-	aux = (char *)malloc(sizeof(char) * ft_strlen(s));
-	if (!aux)
+	res = (char **)malloc(sizeof(char *) * (ft_split_cnt(s, c) + 1));
+	if (!s || !res || !ft_split_in(s, c, res))
 		return (NULL);
-	i = 0;
-    ft_bzero(aux, ft_strlen(s));
+	return (res);
+}
 
+static char	**ft_split_in(char const *s, char c, char **res)
+{
+	int	end;
+	int	start;
+	int	index;
+
+	end = 0;
+	start = 0;
+	index = 0;
+	while (s[end])
+	{
+		if (s[end] == c)
+			start = ++end;
+		else
+		{
+			while (s[end] && s[end] != c)
+				end++;
+			res[index] = ft_substr(s, start, end - start);
+			if (!res[index])
+			{
+				ft_split_free(res, index);
+				return (NULL);
+			}
+			index++;
+		}
+	}
+	return (res[index] = NULL, res);
+}
+
+static int	ft_split_cnt(char const *s, char c)
+{
+	int	i;
+	int	words;
+
+	i = 0;
+	words = 0;
 	while (s[i])
 	{
 		if (s[i] == c)
-		{
-			aux[i] = '\0';
-			if (aux[i + 1] != '\0')
-				wrdcnt++;
-		}
-		else
-			aux[i] = s[i];
-		i++;
-	}
-
-
-	res = (char **)malloc(sizeof(char *) * wrdcnt);
-	if (!res)
-		return (NULL);
-	i = 0;
-
-
-	while (wrdcnt > i)
-	{
-		if (*aux != '\0' && *(aux - 1) == '\0')
-			res[i] = aux;
-		if (*aux == '\0' && *(aux + 1) != '\0')
 			i++;
-		aux++;
+		else
+		{
+			words++;
+			while (s[i] && s[i] != c)
+				i++;
+		}
 	}
+	return (words);
+}
 
-
-	return (res);
+static void	ft_split_free(char **res, int index)
+{
+	while (index >= 0)
+		free(res[index--]);
+	free(res);
 }
