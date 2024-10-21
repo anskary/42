@@ -6,7 +6,7 @@
 /*   By: oudina <oudina@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 21:01:44 by oudina            #+#    #+#             */
-/*   Updated: 2024/10/21 01:25:45 by oudina           ###   ########.fr       */
+/*   Updated: 2024/10/21 01:43:50 by oudina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	if (dst == src || len == 0)
 		return (dst);
 	if (d < s)
+	{
 		while (len--)
-			d[i] = s[i++];
+		{
+			d[i] = s[i];
+			i++;
+		}
+	}
 	else
 		while (len--)
 			d[len] = s[len];
